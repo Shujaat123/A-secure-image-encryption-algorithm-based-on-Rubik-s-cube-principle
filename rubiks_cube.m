@@ -24,7 +24,7 @@ Kc = randi([0,(2^nbits)-1],[1,N]);
 %% Step2
 ITERmax = 10;
 
-figure(1), subplot(1,3,1), imshow(Io)
+figure(1), subplot(1,3,1), imshow(Io), title('Input Image')
 
 %% Encryption
 I_ENC = Io;
@@ -57,7 +57,7 @@ for i=1:ITERmax %% Step3
     end
 end %% Step8
 
-figure(1), subplot(1,3,2), imshow(I_ENC)
+figure(1), subplot(1,3,2), imshow(I_ENC), title('Encrypted Image')
 
 %% Decryption
 I_DEC = I_ENC;
@@ -93,4 +93,4 @@ for i=1:ITERmax %% Step1~2
     end  
 end %% Step7
 
-figure(1), subplot(1,3,3), imshow(I_DEC)
+figure(1), subplot(1,3,3), imshow(I_DEC), title('Decrypted Image')
