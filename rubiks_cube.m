@@ -22,7 +22,7 @@ Kr = randi([0,(2^nbits)-1],[1,M]);
 Kc = randi([0,(2^nbits)-1],[1,N]);
 
 %% Step2
-ITERmax = 10;
+ITERmax = 1;
 
 figure(1), subplot(1,3,1), imshow(Io), title('Input Image')
 
@@ -34,7 +34,7 @@ for i=1:ITERmax %% Step3
     M_alpha_i = 1-2*mod(alpha_i,2);
     
     for m=1:M
-        I_SCR(m,:) = circshift(I_ENC(m,:),M_alpha_i(m));
+        I_SCR(m,:) = circshift(I_ENC(m,:),M_alpha_i(m)*Kr(m));
     end
     
     %% Step5
@@ -42,7 +42,7 @@ for i=1:ITERmax %% Step3
     M_beta_i = 1-2*mod(beta_i,2);
 
     for n=1:N
-        I_SCR(:,n) = circshift(I_SCR(:,n),M_beta_i(n));
+        I_SCR(:,n) = circshift(I_SCR(:,n),M_beta_i(n)*Kc(n));
     end
     
     %% Step6
@@ -57,7 +57,8 @@ for i=1:ITERmax %% Step3
     end
 end %% Step8
 
-figure(1), subplot(1,3,2), imshow(I_ENC), title('Encrypted Image')
+figure(1), subplot(2,3,2), imshow(I_SCR), title('Scrambled Image')
+figure(1), subplot(2,3,5), imshow(I_ENC), title('Encrypted Image')
 
 %% Decryption
 I_DEC = I_ENC;
@@ -80,7 +81,7 @@ for i=1:ITERmax %% Step1~2
     M_beta_i = 2*mod(beta_i,2)-1;
 
     for n=1:N
-        I_DEC(:,n) = circshift(I_SCR(:,n),M_beta_i(n));
+        I_DEC(:,n) = circshift(I_SCR(:,n),M_beta_i(n)*Kc(n));
     end
     
     %% Step6
@@ -89,7 +90,7 @@ for i=1:ITERmax %% Step1~2
     M_alpha_i = 2*mod(alpha_i,2)-1;
     
     for m=1:M
-        I_DEC(m,:) = circshift(I_DEC(m,:),M_alpha_i(m));
+        I_DEC(m,:) = circshift(I_DEC(m,:),M_alpha_i(m)*Kr(m));
     end  
 end %% Step7
 
